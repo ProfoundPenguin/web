@@ -1,0 +1,52 @@
+{% extends "enduser/base.html" %}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div id="about" class="section">
+
+    <h1>About</h1>
+    <p>At The Better Tomorrow Learning Academy, we believe in the power of education to transform lives and create a brighter future. Our mission is to provide an inclusive, innovative, and dynamic learning environment where every individual can thrive.</p>
+
+    <div id="partition">
+        <h2>Our goal</h2>
+        <p>Our mission is to empower students with the knowledge, skills, and values they need to succeed in a rapidly changing world. We aim to:</p>
+        <ul>
+            <li><span>Inspire Lifelong Learning</span>: Cultivate a passion for learning that extends beyond the classroom.</li>
+            <li><span>Foster Innovation</span>: Encourage creative thinking and problem-solving skills.</li>
+            <li><span>Promote Inclusivity</span>: Ensure every member feels valued and respected.</li>
+            <li><span>Build Community</span>: Create a supportive network of learners, educators, and families.</li>
+        </ul>
+    </div>
+
+    <div id="partition">
+        <h2>Our Vision</h2>
+        <p>We envision a world where education is accessible to all, where every learner is equipped to make meaningful contributions to society, and where curiosity and creativity are nurtured.</p>
+    </div>
+
+</div>
+
+{% if teams %}
+<div id="team" class="section">
+    <h2>Our Team</h2>
+    <p>Our dedicated team works hard to provide an exceptional learning experience.</p>
+    <div id="employees">
+        {% for team in teams %}
+    <div id="person">
+        <img src="{{ team.image.url }}">
+        <h3>{{ team.name }}</h3>
+        <p>- {{ team.role }}</p>
+        {% if not forloop.last %}
+            <svg class="theLine" width="15" height="2" viewBox="0 0 15 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line y1="1" x2="15" y2="1" stroke="#6D9886" stroke-width="2"/>
+            </svg>
+        {% endif %}
+    </div>
+{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

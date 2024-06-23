@@ -1,0 +1,178 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBT</title>
+
+    <link rel="stylesheet" href="{% static "style/core.css" %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        function menu() {
+            document.body.classList.toggle('menu');
+        }
+        function scrollIntoEnroll() {
+            // Find the target element with the ID 'enroll'
+            const targetElement = document.getElementById('enroll');
+        
+            // Check if the element exists
+            if (targetElement) {
+                // If the element exists, scroll into view with smooth behavior
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                // If the element does not exist, redirect to '/#enroll'
+                window.location.href = '/#enroll';
+            }
+        }
+    </script>
+</head>
+<body class="">
+
+{% if announcement_bar %}
+<div id="a_bar">
+    <div id="slider">
+        <div>
+            <p>Upcoming Seminar 8th October - 2pm, Title being Self Improvement</p>
+            <p>*</p>
+        </div>
+    {% comment %} <h1>{{ announcement_bar.text }}</h1> {% endcomment %}
+    {% comment %} {% if announcement_bar.image %}
+        <img src="{{ announcement_bar.image.url }}" alt="Announcement Bar Image">
+    {% else %}
+        <img src="{% static 'images/default.jpg' %}" alt="Default Announcement Bar Image">
+    {% endif %} {% endcomment %}
+    </div>
+
+    <script>
+        function duplicateElement() {
+            const originalElement = document.querySelector('#a_bar #slider div');
+            const screenWidth = window.innerWidth;
+            const originalWidth = originalElement.offsetWidth;
+        
+            const numDuplicates = Math.ceil((screenWidth * 4) / originalWidth);
+            {% comment %} console.log("Ye") {% endcomment %}
+            for (let i = 0; i < numDuplicates; i++) {
+                const clone = originalElement.cloneNode(true);
+                originalElement.parentNode.appendChild(clone);
+            }
+        }
+
+        
+
+        function animateSlider() {
+            const originalElement = document.querySelector('#a_bar #slider div');
+            const originalWidth = originalElement.offsetWidth;
+            const slider = document.getElementById('slider');
+            const container = document.getElementById('a_bar');
+            let position = 0;
+            const step = 0.5; // Pixels to move per frame (adjust speed here)
+    
+            function move() {
+                position -= step;
+                slider.style.transform = `translateX(${position}px)`;
+    
+                // Reset position when slider moves out of container
+                if (position == (originalWidth * -3 - 50)) {
+                    position = 25;
+                }
+    
+                requestAnimationFrame(move);
+            }
+    
+            move();
+        }
+        
+        // Call the function when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            duplicateElement();
+            animateSlider();
+        });
+        
+    </script>
+</div>
+{% endif %}
+
+    <div id="banner" class="section">
+        <div id="menu_box" class="mobile_only">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+                <li>
+                    <a href="/announcements">Announcements</a>
+                </li>
+            </ul>
+            <div id="social">
+                <a href="">
+                    <img src="{% static "img/icons/whatsapp_t.webp" %}" alt="">
+                </a>
+                <a href="">
+                    <img src="{% static "img/icons/facebook_t.webp" %}" alt="">
+                </a>
+                <a href="">
+                    <img src="{% static "img/icons/insta_t.webp" %}" alt="">
+                </a>
+            </div>
+        </div>
+
+        <div id="logo">
+            <img src="{% static "img/main_logo.webp" %}" alt="">
+            <p class="pc_only">TBT Learning Institute</p>
+        </div>
+        <div id="right_side">
+            <div id="menu" class="pc_only">
+                <a href="/">Home</a><a href="/about">About</a><a href="/announcements">Announcements</a>
+                <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="2" cy="2" r="2" fill="#6D9886"/>
+                </svg>
+            </div>
+            <button class="p2" onclick="scrollIntoEnroll()">Enroll</button>
+            <div id="menu_button" onclick="menu()" class="mobile_only">
+                <div class="l1"></div>
+                <div class="l2"></div>
+                <div class="l3"></div>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}{% endblock content %}
+
+    <div id="footer" class="section">
+        <div id="social">
+            <a href="">
+                <img src="{% static "img/icons/whatsapp_t.webp" %}" alt="">
+            </a>
+            <a href="">
+                <img src="{% static "img/icons/facebook_t.webp" %}" alt="">
+            </a>
+            <a href="">
+                <img src="{% static "img/icons/insta_t.webp" %}" alt="">
+            </a>
+        </div>
+
+        <div id="links">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/">About</a></li>
+                <li><a href="/">Announcements</a></li>
+            </ul>
+        </div>
+
+        <p>Website designed and developed by <a href="https://habib.pythonanywhere.com">Habib</a></p>
+        <div>
+            <p>All times on this website are in Kabul time (UTC +4:30).</p>
+            <p>© 2024 The Better Tomorrow Learning Academy. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

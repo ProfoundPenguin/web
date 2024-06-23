@@ -1,0 +1,73 @@
+{% extends "enduser/base.html" %}
+
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<script>
+    function filterAnnouncements() {
+        // Get the search input value
+        const query = document.getElementById('announcement_search').value.toLowerCase();
+        
+        // Get all announcements
+        const announcements = document.querySelectorAll('#announcement');
+        
+        // Track if any announcement is visible
+        let anyVisible = false;
+        
+        // Loop through announcements and filter based on query
+        announcements.forEach(announcement => {
+            const title = announcement.querySelector('h3').textContent.toLowerCase();
+            const caption = announcement.querySelector('p').textContent.toLowerCase();
+            
+            // Check if the title or caption contains the query
+            if (title.includes(query) || caption.includes(query)) {
+                announcement.classList.remove("hide"); // Show the announcement
+                anyVisible = true;
+            } else {
+                announcement.classList.add("hide"); // Hide the announcement
+            }
+        });
+
+        if (!anyVisible) {
+            document.body.classList.add("no_announcement")
+        } else {
+            document.body.classList.remove("no_announcement")
+        }
+    }
+    </script>
+
+<div id="announcements" class="section announcement_page">
+    <div id="sub_banner">
+        <h2>Announcements</h2>
+        <div id="right_side">
+            <div id="search">
+                <input type="text" placeholder="Search" id="announcement_search" oninput="filterAnnouncements()">
+                <img src="{% static "img/icons/search.webp" %}">
+            </div>
+        </div>
+    </div>
+    <div id="no_found">
+        <h3>No Results Found.</h3>
+    </div>
+    {% if announcements %}
+        {% for announcement in announcements %}
+        <div id="announcement">
+                
+            <img src="{{ announcement.image.url }}" alt="{{ announcement.title }}">
+            <div id="text">
+                <h3 class="underline">{{ announcement.title }}</h3>
+                <span>Date published: {{ announcement.date_time|timesince_biggest:now }} ago</span>
+                <p>{{ announcement.caption }}</p>
+                <button>Share
+                    <img src="{% static "img/icons/share.webp" %}" alt="">
+                </button>
+            </div>
+
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock content %}
